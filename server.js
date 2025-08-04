@@ -1,23 +1,10 @@
-// server.js
-const WebSocket = require('ws');
+const http = require('http');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const server = http.createServer((req, res) => {
+  res.end('Hello depuis le port 89 !');
+});
 
-console.log('✅ Serveur WebSocket en écoute sur ws://localhost:8080');
-
-wss.on('connection', (socket) => {
-  console.log('📡 Client connecté');
-
-  socket.on('message', (message) => {
-    console.log('📨 Message reçu du client :', message.toString());
-    
-    // Répondre au client
-    socket.send('👋 Salut client, j\'ai bien reçu ton message !');
-  });
-
-  socket.on('close', () => {
-    console.log('❌ Client déconnecté');
-  });
-
-  socket.send('🎉 Bienvenue sur le serveur WebSocket !');
+// Écouter sur toutes les adresses IP (0.0.0.0) et sur le port 89
+server.listen(89, '0.0.0.0', () => {
+  console.log('Serveur en ligne sur http://0.0.0.0:89');
 });
